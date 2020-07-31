@@ -1,6 +1,9 @@
 package JHexEditor.common;
 
+import java.io.File;
+
 import JHexEditor.gui.FileInputWindow;
+import JHexEditor.gui.ShowBinaryWindow;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
