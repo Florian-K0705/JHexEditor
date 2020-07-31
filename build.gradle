@@ -1,10 +1,16 @@
 plugins {
     id 'java'
     id 'application'
+	id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 repositories {
     jcenter()
+}
+
+javafx {
+    version = "11"
+    modules = [ 'javafx.controls' ]
 }
 
 dependencies {
@@ -14,10 +20,9 @@ dependencies {
 }
 
 application {
-    mainClassName = 'JHexEditor.App'
+    mainClassName = 'JHexEditor.common.Launcher'
 }
 
 test {
-    // Use junit platform for unit tests
     useJUnitPlatform()
 }
