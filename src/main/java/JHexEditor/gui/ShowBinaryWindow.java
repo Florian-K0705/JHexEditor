@@ -42,6 +42,8 @@ public class ShowBinaryWindow extends TableView<Entry>
 			
 			//TODO Manche Dateien haben unterschiedlich große Bit-Blöcke.
 				//Darauf muss eingegangen werden
+				//Dies kann umgesetzt werden, in dem 8-Bit, 16-Bit, 32-Bit, 64-Bit oder 128-Bit blöcke 
+				//angezeigt werden können
 			
 			
 			numberColumn.setCellValueFactory(new PropertyValueFactory<Entry, Integer>("number"));
