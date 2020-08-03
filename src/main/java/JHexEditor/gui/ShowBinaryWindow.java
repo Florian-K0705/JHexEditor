@@ -5,42 +5,74 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
-import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 
-public class ShowBinaryWindow extends GridPane
+public class ShowBinaryWindow extends TableView<Entry>
 {
 	public ShowBinaryWindow(File file)
 	{
-		
-		try {
+		try 
+		{
 			InputStream fileInputStream = new FileInputStream(file);
-			
 			byte[] allBinaries = fileInputStream.readAllBytes();
-			String output = "";
 			
-			//TODO Label ist keine gute Lösung! Funktioniert auch nicht für große dateien
+			ObservableList<Entry> data = fillObservableList(allBinaries);
 			
-			for (int i=0; i<allBinaries.length; i++)
-			{
-				output = i + ":   " + Byte.toString(allBinaries[i]) 
-						+ ", 10er   |  " + (char) allBinaries[i]
-						+ ", (char)   |  " + Integer.parseInt(Byte.toString(allBinaries[i]), 16)
-						+ ", 16er";
-				this.add(new Label(output), 0, i);
-			}
+			TableColumn<Entry, Integer> numberColumn = new TableColumn<Entry, Integer>("Number");
+			numberColumn.setResizable(false);
 			
-			this.setPadding(new Insets(10, 10, 10, 10));
+			TableColumn<Entry, Byte> byteColumn = new TableColumn<Entry, Byte>("Integer");
+			byteColumn.setResizable(false);
+			
+			TableColumn<Entry, Character> charColumn = new TableColumn<Entry, Character>("Charackter");
+			charColumn.setResizable(false);
+			
+			
+			
+			//TODO Weitere Spalte mit Binär-Werten
+			
+			//TODO Weitere Spalte mit Hexadezimal-Werten
+			
+			//TODO Manche Dateien haben unterschiedlich große Bit-Blöcke.
+				//Darauf muss eingegangen werden
+			
+			
+			numberColumn.setCellValueFactory(new PropertyValueFactory<Entry, Integer>("number"));
+			byteColumn.setCellValueFactory(new PropertyValueFactory<Entry, Byte>("binary"));
+			charColumn.setCellValueFactory(new PropertyValueFactory<Entry, Character>("charackter"));
+			
+			this.getColumns().addAll(numberColumn, byteColumn, charColumn);
+			this.setItems(data);
+			
 			fileInputStream.close();
 			
-		} catch (FileNotFoundException e) {
-
+		} catch(FileNotFoundException e)
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (IOException e) 
+		{
 			e.printStackTrace();
 		}
 	}
+	
+	private ObservableList<Entry> fillObservableList(byte[] bin)
+	{
+		ArrayList<Entry> arr = new ArrayList<>();
+		
+		for (int i=0; i<bin.length; i++)
+		{
+			arr.add(new Entry(i, bin[i]));
+		}
+		
+		
+		return FXCollections.observableArrayList(arr);
+	}
+	
 }

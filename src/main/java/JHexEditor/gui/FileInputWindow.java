@@ -21,8 +21,8 @@ public class FileInputWindow extends GridPane
 		
 		FileChooser chooser = new FileChooser();
 		Button openButton = new Button("Öffne Datei");
-		Button calculateButton = new Button("Zeige"); //TODO Darf nur valide sein, wenn file != null
-		
+		Button calculateButton = new Button("Zeige"); //TODO !!! Darf nur valide sein, wenn file != null !!! 
+														//TODO Eventuell deswegen Fehler absichern
 		
 		openButton.setOnAction(action -> {
 			file = chooser.showOpenDialog(new Stage());
@@ -36,6 +36,7 @@ public class FileInputWindow extends GridPane
 			stage.setScene(new Scene(showWindow));
 			stage.show();
 		});
+		
 		
 		this.setPadding(new Insets(10, 10, 10, 10));
 		this.add(openButton, 0, 0);
